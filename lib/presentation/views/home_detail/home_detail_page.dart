@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:pearl/presentation/widgets/empty_assets_view.dart';
 
 import '../../../core/controllers/controller.dart';
 import '../../../core/di/service_locator.dart' show injector;
@@ -10,8 +11,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../domain/models/asset_model.dart';
 import 'home_detail_controller.dart';
+import '../../widgets/add_placeholder_card.dart';
 import '../../widgets/asset_card.dart';
-import '../../widgets/empty_assets_view.dart';
 
 class HomeDetailPage extends StatefulWidget {
   const HomeDetailPage({super.key, required this.homeId});
@@ -112,14 +113,14 @@ class _HomeDetailBody extends StatelessWidget {
             children: [
               _AddressCard(address: address, onEdit: onEditHome),
               const SizedBox(height: AppSpacing.xxl),
-              if (assets.isEmpty)
-                EmptyAssetsView(onAddAsset: onAddAsset)
-              else
-                _AssetsGrid(
-                  assets: assets,
-                  onEdit: onEditAsset,
-                  onDelete: onDeleteAsset,
-                ),
+              assets.isEmpty
+                  ? EmptyAssetsView(onAddAsset: onAddAsset)
+                  : _AssetsGrid(
+                      assets: assets,
+                      onAddAsset: onAddAsset,
+                      onEdit: onEditAsset,
+                      onDelete: onDeleteAsset,
+                    ),
             ],
           ),
         ),
@@ -208,11 +209,13 @@ class _AddressCard extends StatelessWidget {
 
 class _AssetsGrid extends StatelessWidget {
   final List<AssetModel> assets;
+  final VoidCallback onAddAsset;
   final ValueChanged<AssetModel> onEdit;
   final ValueChanged<AssetModel> onDelete;
 
   const _AssetsGrid({
     required this.assets,
+    required this.onAddAsset,
     required this.onEdit,
     required this.onDelete,
   });
@@ -230,8 +233,15 @@ class _AssetsGrid extends StatelessWidget {
         mainAxisSpacing: AppSpacing.lg,
         mainAxisExtent: 200,
       ),
-      itemCount: assets.length,
+      itemCount: assets.length + 1,
       itemBuilder: (context, index) {
+        if (index == assets.length) {
+          return AddPlaceholderCard(
+            label: 'Add Asset',
+            icon: LucideIcons.plus,
+            onTap: onAddAsset,
+          );
+        }
         final asset = assets[index];
         return AssetCard(
           asset: asset,

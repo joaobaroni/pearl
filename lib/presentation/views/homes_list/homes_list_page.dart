@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../../core/controllers/controller.dart';
 import '../../../core/responsive/responsive.dart';
 import '../../widgets/pearl_app_bar.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../domain/models/home_model.dart';
 import 'homes_list_controller.dart';
-import '../../widgets/empty_homes_view.dart';
+import '../../widgets/add_placeholder_card.dart';
 import '../../widgets/home_card.dart';
 
 class HomesListPage extends StatefulWidget {
@@ -34,11 +36,6 @@ class _HomesListPageState extends State<HomesListPage>
             if (controller.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (controller.homes.isEmpty) {
-              return _HomesEmptyState(
-                onAddHome: () => controller.openHomeForm(context),
-              );
-            }
             return _HomesGrid(
               homes: controller.homes,
               onOpenHome: (home) =>
@@ -46,35 +43,9 @@ class _HomesListPageState extends State<HomesListPage>
               onEditHome: (home) =>
                   controller.openHomeForm(context, home: home),
               onDeleteHome: (home) => controller.deleteHome(home.id),
+              onAddHome: () => controller.openHomeForm(context),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class _HomesEmptyState extends StatelessWidget {
-  final VoidCallback onAddHome;
-
-  const _HomesEmptyState({required this.onAddHome});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.responsive<double>(
-          mobile: AppSpacing.paddingMobile,
-          desktop: AppSpacing.paddingDesktop,
-        ),
-        vertical: AppSpacing.xxl,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: AppSpacing.maxContentWidth,
-          ),
-          child: EmptyHomesView(onAddHome: onAddHome),
         ),
       ),
     );
@@ -86,12 +57,14 @@ class _HomesGrid extends StatelessWidget {
   final ValueChanged<HomeModel> onOpenHome;
   final ValueChanged<HomeModel> onEditHome;
   final ValueChanged<HomeModel> onDeleteHome;
+  final VoidCallback onAddHome;
 
   const _HomesGrid({
     required this.homes,
     required this.onOpenHome,
     required this.onEditHome,
     required this.onDeleteHome,
+    required this.onAddHome,
   });
 
   @override
@@ -116,8 +89,15 @@ class _HomesGrid extends StatelessWidget {
             mainAxisSpacing: AppSpacing.lg,
             mainAxisExtent: 230,
           ),
-          itemCount: homes.length,
+          itemCount: homes.length + 1,
           itemBuilder: (context, index) {
+            if (index == homes.length) {
+              return AddPlaceholderCard(
+                label: 'Add Home',
+                icon: LucideIcons.plus,
+                onTap: onAddHome,
+              );
+            }
             final home = homes[index];
             return HomeCard(
               home: home,
