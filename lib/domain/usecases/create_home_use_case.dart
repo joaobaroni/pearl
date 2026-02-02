@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:pearl/core/errors/failures.dart';
-import 'package:pearl/features/homes/domain/models/home_model.dart';
-import 'package:pearl/features/homes/domain/usecases/params/save_home_params.dart';
-import 'package:pearl/features/homes/domain/repositories/home_repository.dart';
+import 'package:pearl/domain/models/home_model.dart';
+import 'package:pearl/domain/usecases/params/save_home_params.dart';
+import 'package:pearl/domain/repositories/home_repository.dart';
 
 class CreateHomeUseCase {
   final HomeRepository _repository;

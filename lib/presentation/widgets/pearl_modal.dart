@@ -2,19 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../theme/app_colors.dart';
-import '../theme/app_shadows.dart';
-import '../theme/app_spacing.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_shadows.dart';
+import '../../core/theme/app_spacing.dart';
 
 class PearlModal extends StatelessWidget {
   final Widget child;
   final double maxWidth;
 
-  const PearlModal({
-    super.key,
-    required this.child,
-    this.maxWidth = 512,
-  });
+  const PearlModal({super.key, required this.child, this.maxWidth = 512});
 
   static Future<T?> show<T>(
     BuildContext context, {
@@ -24,10 +20,7 @@ class PearlModal extends StatelessWidget {
     return showDialog<T>(
       context: context,
       barrierColor: Colors.transparent,
-      builder: (_) => PearlModal(
-        maxWidth: maxWidth,
-        child: child,
-      ),
+      builder: (_) => PearlModal(maxWidth: maxWidth, child: child),
     );
   }
 

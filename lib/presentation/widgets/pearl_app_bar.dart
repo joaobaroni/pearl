@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../responsive/responsive.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
+import '../../core/responsive/responsive.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_spacing.dart';
 
 class PearlAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PearlAppBar({
@@ -40,7 +40,8 @@ class PearlAppBar extends StatelessWidget implements PreferredSizeWidget {
       shape: const Border(
         bottom: BorderSide(color: AppColors.border, width: 1),
       ),
-      leading: leading ??
+      leading:
+          leading ??
           const Padding(
             padding: EdgeInsets.all(AppSpacing.md),
             child: Icon(LucideIcons.home, color: AppColors.primary),
@@ -72,10 +73,7 @@ class PearlAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    required this.label,
-    this.onPressed,
-  });
+  const _ActionButton({required this.label, this.onPressed});
 
   final String label;
   final VoidCallback? onPressed;

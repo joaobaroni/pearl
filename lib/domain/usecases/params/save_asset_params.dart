@@ -1,4 +1,4 @@
-import 'package:pearl/features/homes/domain/models/asset_category.dart';
+import 'package:pearl/domain/models/asset_category.dart';
 
 class SaveAssetParams {
   final String name;

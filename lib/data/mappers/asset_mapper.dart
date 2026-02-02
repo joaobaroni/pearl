@@ -1,6 +1,6 @@
-import 'package:pearl/features/homes/data/dtos/asset_hive_dto.dart';
-import 'package:pearl/features/homes/domain/models/asset_model.dart';
-import 'package:pearl/features/homes/domain/models/asset_category.dart';
+import 'package:pearl/data/dtos/asset_hive_dto.dart';
+import 'package:pearl/domain/models/asset_model.dart';
+import 'package:pearl/domain/models/asset_category.dart';
 
 extension AssetHiveDtoMapper on AssetHiveDto {
   AssetModel toModel() => AssetModel(

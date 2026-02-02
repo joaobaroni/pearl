@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/controllers/pearl_controller.dart';
-import '../../../../core/responsive/responsive.dart';
-import '../../../../core/shell/pearl_app_bar.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../domain/models/home_model.dart';
-import '../controllers/homes_list_controller.dart';
-import '../widgets/empty_homes_view.dart';
-import '../widgets/home_card.dart';
+import '../../../core/controllers/pearl_controller.dart';
+import '../../../core/responsive/responsive.dart';
+import '../../widgets/pearl_app_bar.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../domain/models/home_model.dart';
+import 'homes_list_controller.dart';
+import '../../widgets/empty_homes_view.dart';
+import '../../widgets/home_card.dart';
 
 class HomesListPage extends StatefulWidget {
   const HomesListPage({super.key});
@@ -18,12 +18,6 @@ class HomesListPage extends StatefulWidget {
 
 class _HomesListPageState extends State<HomesListPage>
     with PearlControllerMixin<HomesListPage, HomesListController> {
-  @override
-  void initState() {
-    super.initState();
-    print('HomesListPage initialized');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

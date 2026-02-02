@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pearl/core/controllers/pearl_controller.dart';
+import 'package:pearl/core/extensions/list_extensions.dart';
 import 'package:pearl/core/controllers/subject_notifier.dart';
 import 'package:pearl/core/errors/failures.dart';
 import 'package:pearl/core/routing/route_names.dart';
-import 'package:pearl/features/homes/domain/models/home_model.dart';
-import 'package:pearl/features/homes/domain/usecases/delete_home_use_case.dart';
-import 'package:pearl/features/homes/domain/usecases/get_home_by_id_use_case.dart';
-import 'package:pearl/features/homes/domain/usecases/get_homes_use_case.dart';
-import 'package:pearl/features/homes/presentation/widgets/home_form_modal.dart';
+import 'package:pearl/domain/models/home_model.dart';
+import 'package:pearl/domain/usecases/delete_home_use_case.dart';
+import 'package:pearl/domain/usecases/get_home_by_id_use_case.dart';
+import 'package:pearl/domain/usecases/get_homes_use_case.dart';
+import 'package:pearl/presentation/views/home_form/home_form_modal.dart';
 
 class HomesListController extends PearlController with SubjectListener {
   final GetHomesUseCase _getHomes;
@@ -64,22 +65,11 @@ class HomesListController extends PearlController with SubjectListener {
     final result = await HomeFormModal.show(context, home: home);
     if (result == null) return;
 
-    _upsertHome(result, existing: home);
+    homes.upsert(result, existing: home, test: (h) => h.id == home?.id);
     notifyListeners();
 
     if (!context.mounted) return;
     context.goNamed(RouteNames.homeDetail, pathParameters: {'id': result.id});
-  }
-
-  void _upsertHome(HomeModel home, {HomeModel? existing}) {
-    if (existing == null) {
-      homes.add(home);
-
-      return;
-    }
-
-    final index = homes.indexWhere((h) => h.id == existing.id);
-    if (index != -1) homes[index] = home;
   }
 
   Future<void> deleteHome(String id) async {

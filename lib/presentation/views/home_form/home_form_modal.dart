@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../../core/controllers/pearl_controller.dart';
-import '../../../../core/di/service_locator.dart';
-import '../../../../core/shell/pearl_modal.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_shadows.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/pearl_text_field.dart';
-import '../../domain/models/home_model.dart';
-import '../../domain/models/us_state.dart';
-import '../controllers/home_form_controller.dart';
+import '../../../core/controllers/pearl_controller.dart';
+import '../../../core/di/service_locator.dart';
+import '../../widgets/pearl_modal.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_shadows.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/widgets/pearl_text_field.dart';
+import '../../../domain/models/home_model.dart';
+import '../../../domain/models/us_state.dart';
+import 'home_form_controller.dart';
 
 class HomeFormModal extends StatefulWidget {
   final HomeModel? home;
@@ -18,7 +18,10 @@ class HomeFormModal extends StatefulWidget {
   const HomeFormModal({super.key, this.home});
 
   static Future<HomeModel?> show(BuildContext context, {HomeModel? home}) {
-    return PearlModal.show<HomeModel>(context, child: HomeFormModal(home: home));
+    return PearlModal.show<HomeModel>(
+      context,
+      child: HomeFormModal(home: home),
+    );
   }
 
   @override

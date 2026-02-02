@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pearl/core/controllers/pearl_controller.dart';
 import 'package:pearl/core/controllers/subject_notifier.dart';
 import 'package:pearl/core/errors/failures.dart';
-import 'package:pearl/features/homes/domain/models/asset_model.dart';
-import 'package:pearl/features/homes/domain/models/home_model.dart';
-import 'package:pearl/features/homes/domain/usecases/delete_asset_use_case.dart';
-import 'package:pearl/features/homes/domain/usecases/get_home_by_id_use_case.dart';
-import 'package:pearl/features/homes/presentation/widgets/asset_form_modal.dart';
-import 'package:pearl/features/homes/presentation/widgets/home_form_modal.dart';
+import 'package:pearl/core/extensions/list_extensions.dart';
+import 'package:pearl/domain/models/asset_model.dart';
+import 'package:pearl/domain/models/home_model.dart';
+import 'package:pearl/domain/usecases/delete_asset_use_case.dart';
+import 'package:pearl/domain/usecases/get_home_by_id_use_case.dart';
+import 'package:pearl/presentation/views/asset_form/asset_form_modal.dart';
+import 'package:pearl/presentation/views/home_form/home_form_modal.dart';
 
 class HomeDetailController extends PearlController with SubjectDispatcher {
   final GetHomeByIdUseCase _getHomeById;
@@ -56,7 +57,11 @@ class HomeDetailController extends PearlController with SubjectDispatcher {
 
     if (result == null) return;
 
-    _upsertAsset(result, existing: asset);
+    home?.assets.upsert(
+      result,
+      existing: asset,
+      test: (a) => a.id == asset?.id,
+    );
     notifyListeners();
     notifySubject(Subject.home);
   }
@@ -69,15 +74,6 @@ class HomeDetailController extends PearlController with SubjectDispatcher {
     home = result;
     notifyListeners();
     notifySubject(Subject.home);
-  }
-
-  void _upsertAsset(AssetModel asset, {AssetModel? existing}) {
-    if (existing != null) {
-      final index = home?.assets.indexWhere((a) => a.id == existing.id) ?? -1;
-      if (index != -1) home?.assets[index] = asset;
-    } else {
-      home?.assets.add(asset);
-    }
   }
 
   Future<void> deleteAsset(String assetId) async {

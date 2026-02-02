@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:pearl/core/errors/failures.dart';
-import 'package:pearl/features/homes/domain/repositories/home_repository.dart';
+import 'package:pearl/domain/repositories/home_repository.dart';
 
 class DeleteHomeUseCase {
   final HomeRepository _repository;

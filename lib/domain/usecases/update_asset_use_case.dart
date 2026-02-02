@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:pearl/core/errors/failures.dart';
-import 'package:pearl/features/homes/domain/models/asset_model.dart';
-import 'package:pearl/features/homes/domain/repositories/asset_repository.dart';
-import 'package:pearl/features/homes/domain/usecases/params/save_asset_params.dart';
+import 'package:pearl/domain/models/asset_model.dart';
+import 'package:pearl/domain/repositories/asset_repository.dart';
+import 'package:pearl/domain/usecases/params/save_asset_params.dart';
 
 class UpdateAssetUseCase {
   final AssetRepository _repository;

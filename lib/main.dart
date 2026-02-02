@@ -5,9 +5,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'core/di/service_locator.dart';
 import 'core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'features/homes/data/dtos/address_hive_dto.dart';
-import 'features/homes/data/dtos/asset_hive_dto.dart';
-import 'features/homes/data/dtos/home_hive_dto.dart';
+import 'data/dtos/address_hive_dto.dart';
+import 'data/dtos/asset_hive_dto.dart';
+import 'data/dtos/home_hive_dto.dart';
 
 void main() async {
   usePathUrlStrategy();

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:pearl/core/errors/failures.dart';
-import 'package:pearl/features/homes/domain/models/asset_model.dart';
-import 'package:pearl/features/homes/domain/usecases/params/save_asset_params.dart';
+import 'package:pearl/domain/models/asset_model.dart';
+import 'package:pearl/domain/usecases/params/save_asset_params.dart';
 
 abstract class AssetRepository {
   Future<Either<Failure, AssetModel>> add(String homeId, SaveAssetParams params);

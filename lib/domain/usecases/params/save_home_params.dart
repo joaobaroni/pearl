@@ -1,4 +1,4 @@
-import 'package:pearl/features/homes/domain/models/address_model.dart';
+import 'package:pearl/domain/models/address_model.dart';
 
 class SaveHomeParams {
   final String name;

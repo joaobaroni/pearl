@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../../core/controllers/pearl_controller.dart';
-import '../../../../core/di/service_locator.dart';
-import '../../../../core/responsive/responsive.dart';
-import '../../../../core/shell/pearl_app_bar.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../domain/models/asset_model.dart';
-import '../controllers/home_detail_controller.dart';
-import '../widgets/asset_card.dart';
-import '../widgets/empty_assets_view.dart';
+import '../../../core/controllers/pearl_controller.dart';
+import '../../../core/di/service_locator.dart';
+import '../../../core/responsive/responsive.dart';
+import '../../widgets/pearl_app_bar.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../domain/models/asset_model.dart';
+import 'home_detail_controller.dart';
+import '../../widgets/asset_card.dart';
+import '../../widgets/empty_assets_view.dart';
 
 class HomeDetailPage extends StatefulWidget {
-  const HomeDetailPage({
-    super.key,
-    required this.homeId,
-  });
+  const HomeDetailPage({super.key, required this.homeId});
 
   final String homeId;
 
@@ -41,8 +38,7 @@ class _HomeDetailPageState extends State<HomeDetailPage>
           appBar: PearlAppBar(
             title: controller.home?.name ?? '',
             leading: IconButton(
-              icon:
-                  const Icon(LucideIcons.chevronLeft, color: AppColors.body),
+              icon: const Icon(LucideIcons.chevronLeft, color: AppColors.body),
               onPressed: () => context.pop(),
             ),
             actionLabel: 'Add Asset',
@@ -67,8 +63,7 @@ class _HomeDetailPageState extends State<HomeDetailPage>
                   onAddAsset: () => controller.openAssetForm(context),
                   onEditAsset: (asset) =>
                       controller.openAssetForm(context, asset: asset),
-                  onDeleteAsset: (asset) =>
-                      controller.deleteAsset(asset.id),
+                  onDeleteAsset: (asset) => controller.deleteAsset(asset.id),
                 );
               },
             ),
@@ -115,10 +110,7 @@ class _HomeDetailBody extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _AddressCard(
-                address: address,
-                onEdit: onEditHome,
-              ),
+              _AddressCard(address: address, onEdit: onEditHome),
               const SizedBox(height: AppSpacing.xxl),
               if (assets.isEmpty)
                 EmptyAssetsView(onAddAsset: onAddAsset)
