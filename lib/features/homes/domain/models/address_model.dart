@@ -1,12 +1,12 @@
 import 'us_state.dart';
 
-class Address {
+class AddressModel {
   final String street;
   final String city;
   final UsState state;
   final String zip;
 
-  const Address({
+  const AddressModel({
     required this.street,
     required this.city,
     required this.state,

@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:pearl/core/errors/failures.dart';
-import 'package:pearl/features/homes/domain/models/home.dart';
+import 'package:pearl/features/homes/domain/models/home_model.dart';
 import 'package:pearl/features/homes/domain/repositories/home_repository.dart';
 
-class GetHomeById {
+class GetHomesUseCase {
   final HomeRepository _repository;
-  GetHomeById(this._repository);
+  GetHomesUseCase(this._repository);
 
-  Either<Failure, Home> call(String id) => _repository.getById(id);
+  Either<Failure, List<HomeModel>> call() => _repository.getAll();
 }

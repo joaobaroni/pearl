@@ -4,10 +4,10 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_shadows.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/models/home.dart';
+import '../../domain/models/home_model.dart';
 
 class HomeCard extends StatefulWidget {
-  final Home home;
+  final HomeModel home;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;

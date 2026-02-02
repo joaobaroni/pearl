@@ -25,13 +25,14 @@ class AssetHiveDtoAdapter extends TypeAdapter<AssetHiveDto> {
       installDate: fields[5] as DateTime?,
       warrantyDate: fields[6] as DateTime?,
       notes: fields[7] as String,
+      homeId: fields[8] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AssetHiveDto obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class AssetHiveDtoAdapter extends TypeAdapter<AssetHiveDto> {
       ..writeByte(6)
       ..write(obj.warrantyDate)
       ..writeByte(7)
-      ..write(obj.notes);
+      ..write(obj.notes)
+      ..writeByte(8)
+      ..write(obj.homeId);
   }
 
   @override

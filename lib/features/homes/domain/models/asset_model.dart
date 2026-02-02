@@ -1,6 +1,6 @@
 import 'asset_category.dart';
 
-class Asset {
+class AssetModel {
   final String id;
   final String name;
   final AssetCategory category;
@@ -10,7 +10,7 @@ class Asset {
   final DateTime? warrantyDate;
   final String notes;
 
-  const Asset({
+  const AssetModel({
     required this.id,
     required this.name,
     required this.category,

@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_shadows.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/dashed_border.dart';
 
 class EmptyHomesView extends StatelessWidget {
   final VoidCallback? onAddHome;
@@ -15,7 +16,7 @@ class EmptyHomesView extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return CustomPaint(
-      foregroundPainter: _DashedBorderPainter(
+      foregroundPainter: DashedBorderPainter(
         color: AppColors.border,
         strokeWidth: 2,
         dashLength: 8,
@@ -92,64 +93,4 @@ class EmptyHomesView extends StatelessWidget {
       ),
     );
   }
-}
-
-class _DashedBorderPainter extends CustomPainter {
-  final Color color;
-  final double strokeWidth;
-  final double dashLength;
-  final double gapLength;
-  final double borderRadius;
-
-  _DashedBorderPainter({
-    required this.color,
-    required this.strokeWidth,
-    required this.dashLength,
-    required this.gapLength,
-    required this.borderRadius,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
-
-    final rrect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(
-        strokeWidth / 2,
-        strokeWidth / 2,
-        size.width - strokeWidth,
-        size.height - strokeWidth,
-      ),
-      Radius.circular(borderRadius),
-    );
-
-    final path = Path()..addRRect(rrect);
-
-    final dashedPath = _dashPath(path, dashLength, gapLength);
-    canvas.drawPath(dashedPath, paint);
-  }
-
-  Path _dashPath(Path source, double dash, double gap) {
-    final result = Path();
-    for (final metric in source.computeMetrics()) {
-      var distance = 0.0;
-      while (distance < metric.length) {
-        final end = (distance + dash).clamp(0.0, metric.length);
-        result.addPath(metric.extractPath(distance, end), Offset.zero);
-        distance += dash + gap;
-      }
-    }
-    return result;
-  }
-
-  @override
-  bool shouldRepaint(_DashedBorderPainter oldDelegate) =>
-      color != oldDelegate.color ||
-      strokeWidth != oldDelegate.strokeWidth ||
-      dashLength != oldDelegate.dashLength ||
-      gapLength != oldDelegate.gapLength ||
-      borderRadius != oldDelegate.borderRadius;
 }

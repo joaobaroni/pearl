@@ -1,24 +1,23 @@
 import 'package:pearl/features/homes/data/dtos/home_hive_dto.dart';
 import 'package:pearl/features/homes/data/mappers/address_mapper.dart';
-import 'package:pearl/features/homes/data/mappers/asset_mapper.dart';
-import 'package:pearl/features/homes/domain/models/home.dart';
+import 'package:pearl/features/homes/domain/models/asset_model.dart';
+import 'package:pearl/features/homes/domain/models/home_model.dart';
 
 extension HomeHiveDtoMapper on HomeHiveDto {
-  Home toDomain() => Home(
+  HomeModel toDomain({List<AssetModel> assets = const []}) => HomeModel(
         id: id,
         name: name,
         address: address.toDomain(),
-        assets: assets.map((dto) => dto.toDomain()).toList(),
+        assets: assets,
         createdAt: createdAt,
       );
 }
 
-extension HomeToHiveDto on Home {
+extension HomeToHiveDto on HomeModel {
   HomeHiveDto toHiveDto() => HomeHiveDto(
         id: id,
         name: name,
         address: address.toHiveDto(),
-        assets: assets.map((asset) => asset.toHiveDto()).toList(),
         createdAt: createdAt,
       );
 }

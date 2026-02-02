@@ -1,9 +1,9 @@
 import 'package:pearl/features/homes/data/dtos/address_hive_dto.dart';
-import 'package:pearl/features/homes/domain/models/address.dart';
+import 'package:pearl/features/homes/domain/models/address_model.dart';
 import 'package:pearl/features/homes/domain/models/us_state.dart';
 
 extension AddressHiveDtoMapper on AddressHiveDto {
-  Address toDomain() => Address(
+  AddressModel toDomain() => AddressModel(
         street: street,
         city: city,
         state: UsState.fromAbbreviation(state),
@@ -11,7 +11,7 @@ extension AddressHiveDtoMapper on AddressHiveDto {
       );
 }
 
-extension AddressToHiveDto on Address {
+extension AddressToHiveDto on AddressModel {
   AddressHiveDto toHiveDto() => AddressHiveDto(
         street: street,
         city: city,

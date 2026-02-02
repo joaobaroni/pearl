@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/controllers/pearl_controller.dart';
 import '../../../../core/responsive/responsive.dart';
-import '../../../../core/routing/route_names.dart';
 import '../../../../core/shell/pearl_app_bar.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/models/home.dart';
+import '../../domain/models/home_model.dart';
 import '../controllers/homes_list_controller.dart';
 import '../widgets/empty_homes_view.dart';
 import '../widgets/home_card.dart';
@@ -43,10 +41,8 @@ class _HomesListPageState extends State<HomesListPage>
             }
             return _HomesGrid(
               homes: controller.homes,
-              onOpenHome: (home) => context.goNamed(
-                RouteNames.homeDetail,
-                pathParameters: {'id': home.id},
-              ),
+              onOpenHome: (home) =>
+                  controller.onDetailsTap(context: context, id: home.id),
               onEditHome: (home) =>
                   controller.showHomeForm(context, home: home),
               onDeleteHome: (home) => controller.deleteHome(home.id),
@@ -86,10 +82,10 @@ class _HomesEmptyState extends StatelessWidget {
 }
 
 class _HomesGrid extends StatelessWidget {
-  final List<Home> homes;
-  final ValueChanged<Home> onOpenHome;
-  final ValueChanged<Home> onEditHome;
-  final ValueChanged<Home> onDeleteHome;
+  final List<HomeModel> homes;
+  final ValueChanged<HomeModel> onOpenHome;
+  final ValueChanged<HomeModel> onEditHome;
+  final ValueChanged<HomeModel> onDeleteHome;
 
   const _HomesGrid({
     required this.homes,

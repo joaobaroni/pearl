@@ -1,14 +1,14 @@
-import 'address.dart';
-import 'asset.dart';
+import 'address_model.dart';
+import 'asset_model.dart';
 
-class Home {
+class HomeModel {
   final String id;
   final String name;
-  final Address address;
-  final List<Asset> assets;
+  final AddressModel address;
+  final List<AssetModel> assets;
   final DateTime createdAt;
 
-  const Home({
+  const HomeModel({
     required this.id,
     required this.name,
     required this.address,

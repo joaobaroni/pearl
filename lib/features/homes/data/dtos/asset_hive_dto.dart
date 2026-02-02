@@ -28,6 +28,9 @@ class AssetHiveDto {
   @HiveField(7)
   final String notes;
 
+  @HiveField(8)
+  final String homeId;
+
   AssetHiveDto({
     required this.id,
     required this.name,
@@ -37,5 +40,6 @@ class AssetHiveDto {
     this.installDate,
     this.warrantyDate,
     required this.notes,
+    required this.homeId,
   });
 }

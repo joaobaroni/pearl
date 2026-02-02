@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pearl/core/controllers/pearl_controller.dart';
 
-import '../../domain/models/address.dart';
-import '../../domain/models/home.dart';
+import '../../domain/models/address_model.dart';
+import '../../domain/models/home_model.dart';
 import '../../domain/models/us_state.dart';
-import '../../domain/usecases/create_home.dart';
+import '../../domain/usecases/create_home_use_case.dart';
 import '../../domain/usecases/params/save_home_params.dart';
-import '../../domain/usecases/update_home.dart';
+import '../../domain/usecases/update_home_use_case.dart';
 
 class HomeFormController extends PearlController {
-  final CreateHome _createHome;
-  final UpdateHome _updateHome;
-  final Home? home;
+  final CreateHomeUseCase _createHome;
+  final UpdateHomeUseCase _updateHome;
+  final HomeModel? home;
 
   late final nameController = TextEditingController(text: home?.name ?? '');
   late final streetController = TextEditingController(
@@ -51,7 +51,7 @@ class HomeFormController extends PearlController {
 
     final params = SaveHomeParams(
       name: nameController.text.trim(),
-      address: Address(
+      address: AddressModel(
         street: streetController.text.trim(),
         city: cityController.text.trim(),
         state: selectedState.value,
@@ -59,14 +59,14 @@ class HomeFormController extends PearlController {
       ),
     );
 
+    if (!context.mounted) return;
+
     final either = isEditing
-        ? await _updateHome(home!.id, params)
+        ? (await _updateHome(home!.id, params)).map((_) => home!.id)
         : await _createHome(params);
 
     if (!context.mounted) return;
-    either.fold(
-      (_) => Navigator.of(context).pop(false),
-      (_) => Navigator.of(context).pop(true),
-    );
+
+    Navigator.of(context).pop<String>(either.fold((_) => null, (id) => id));
   }
 }

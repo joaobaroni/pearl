@@ -8,28 +8,36 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_shadows.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/pearl_text_field.dart';
-import '../../domain/models/home_model.dart';
-import '../../domain/models/us_state.dart';
-import '../controllers/home_form_controller.dart';
+import '../../domain/models/asset_model.dart';
+import '../../domain/models/asset_category.dart';
+import '../controllers/asset_form_controller.dart';
 
-class HomeFormModal extends StatefulWidget {
-  final HomeModel? home;
+class AssetFormModal extends StatefulWidget {
+  final String homeId;
+  final AssetModel? asset;
 
-  const HomeFormModal({super.key, this.home});
+  const AssetFormModal({super.key, required this.homeId, this.asset});
 
-  static Future<String?> show(BuildContext context, {HomeModel? home}) {
-    return PearlModal.show<String>(context, child: HomeFormModal(home: home));
+  static Future<bool?> show(
+    BuildContext context, {
+    required String homeId,
+    AssetModel? asset,
+  }) {
+    return PearlModal.show<bool>(
+      context,
+      child: AssetFormModal(homeId: homeId, asset: asset),
+    );
   }
 
   @override
-  State<HomeFormModal> createState() => _HomeFormModalState();
+  State<AssetFormModal> createState() => _AssetFormModalState();
 }
 
-class _HomeFormModalState extends State<HomeFormModal>
-    with PearlControllerMixin<HomeFormModal, HomeFormController> {
+class _AssetFormModalState extends State<AssetFormModal>
+    with PearlControllerMixin<AssetFormModal, AssetFormController> {
   @override
-  HomeFormController createController() =>
-      getIt<HomeFormController>(param1: widget.home);
+  AssetFormController createController() =>
+      getIt<AssetFormController>(param1: widget.homeId, param2: widget.asset);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,7 @@ class _HomeFormModalState extends State<HomeFormModal>
       mainAxisSize: MainAxisSize.min,
       children: [
         _ModalHeader(
-          title: controller.isEditing ? 'Edit Home' : 'Add New Home',
+          title: controller.isEditing ? 'Edit Asset' : 'Add New Asset',
           onClose: () => Navigator.of(context).pop(),
         ),
         _ModalForm(
@@ -87,7 +95,7 @@ class _ModalHeader extends StatelessWidget {
 }
 
 class _ModalForm extends StatelessWidget {
-  final HomeFormController controller;
+  final AssetFormController controller;
   final VoidCallback onCancel;
   final VoidCallback onSave;
 
@@ -107,21 +115,15 @@ class _ModalForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            _FieldLabel(text: 'HOME NICKNAME'),
+            _FieldLabel(text: 'CATEGORY'),
+            const SizedBox(height: AppSpacing.sm),
+            _CategorySelector(controller: controller),
+            const SizedBox(height: AppSpacing.lg),
+            _FieldLabel(text: 'ASSET NAME'),
             const SizedBox(height: AppSpacing.sm),
             PearlTextField(
               controller: controller.nameController,
-              hintText: 'e.g. Downtown Loft',
-              validator: _requiredValidator,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            _SectionHeader(text: 'PROPERTY ADDRESS'),
-            const SizedBox(height: AppSpacing.lg),
-            _FieldLabel(text: 'Street Address'),
-            const SizedBox(height: AppSpacing.xs),
-            PearlTextField(
-              controller: controller.streetController,
-              hintText: '123 Main St',
+              hintText: 'e.g. Master Bedroom AC',
               validator: _requiredValidator,
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -132,47 +134,53 @@ class _ModalForm extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _FieldLabel(text: 'City'),
+                      _FieldLabel(text: 'MANUFACTURER'),
                       const SizedBox(height: AppSpacing.xs),
                       PearlTextField(
-                        controller: controller.cityController,
-                        hintText: 'San Francisco',
-                        validator: _requiredValidator,
+                        controller: controller.manufacturerController,
+                        hintText: 'e.g. LG',
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(width: AppSpacing.lg),
-                SizedBox(
-                  width: 80,
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _FieldLabel(text: 'State'),
+                      _FieldLabel(text: 'MODEL'),
                       const SizedBox(height: AppSpacing.xs),
-                      ValueListenableBuilder<UsState>(
-                        valueListenable: controller.selectedState,
-                        builder: (context, state, _) => _StateDropdown(
-                          value: state,
-                          onChanged: (v) => controller.selectedState.value = v,
-                        ),
+                      PearlTextField(
+                        controller: controller.modelController,
+                        hintText: 'e.g. TH-55X900L',
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.sm),
-                SizedBox(
-                  width: 80,
+              ],
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _FieldLabel(text: 'Zip'),
+                      _FieldLabel(text: 'INSTALL DATE'),
                       const SizedBox(height: AppSpacing.xs),
-                      PearlTextField(
-                        controller: controller.zipController,
-                        hintText: '94105',
-                        validator: _requiredValidator,
-                      ),
+                      _DateField(dateNotifier: controller.installDate),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.lg),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _FieldLabel(text: 'WARRANTY EXPIRATION'),
+                      const SizedBox(height: AppSpacing.xs),
+                      _DateField(dateNotifier: controller.warrantyDate),
                     ],
                   ),
                 ),
@@ -207,64 +215,123 @@ class _FieldLabel extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  final String text;
+class _CategorySelector extends StatelessWidget {
+  final AssetFormController controller;
 
-  const _SectionHeader({required this.text});
+  const _CategorySelector({required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.subtleBorder)),
-      ),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-          color: AppColors.disabled,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
+    final textTheme = Theme.of(context).textTheme;
+
+    return ValueListenableBuilder<AssetCategory>(
+      valueListenable: controller.selectedCategory,
+      builder: (context, selected, _) {
+        return Wrap(
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.sm,
+          children: AssetCategory.values.map((cat) {
+            final isSelected = selected == cat;
+            return Material(
+              color: isSelected ? AppColors.primary : AppColors.surface,
+              borderRadius: BorderRadius.circular(AppSpacing.xxxl),
+              child: InkWell(
+                onTap: () => controller.selectedCategory.value = cat,
+                borderRadius: BorderRadius.circular(AppSpacing.xxxl),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.sm,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppSpacing.xxxl),
+                    border: Border.all(
+                      color: isSelected ? AppColors.primary : AppColors.border,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        cat.icon,
+                        size: 16,
+                        color: isSelected
+                            ? AppColors.surface
+                            : AppColors.medium,
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Text(
+                        cat.label,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: isSelected
+                              ? AppColors.surface
+                              : AppColors.medium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
 
-class _StateDropdown extends StatelessWidget {
-  final UsState value;
-  final ValueChanged<UsState> onChanged;
+class _DateField extends StatelessWidget {
+  final ValueNotifier<DateTime?> dateNotifier;
 
-  const _StateDropdown({required this.value, required this.onChanged});
+  const _DateField({required this.dateNotifier});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
-        border: Border.all(color: AppColors.border),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<UsState>(
-          value: value,
-          isExpanded: true,
-          isDense: false,
-          icon: const SizedBox.shrink(),
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: AppColors.body),
-          items: UsState.values
-              .map(
-                (s) => DropdownMenuItem(value: s, child: Text(s.abbreviation)),
-              )
-              .toList(),
-          onChanged: (v) {
-            if (v != null) onChanged(v);
-          },
-        ),
-      ),
+    final textTheme = Theme.of(context).textTheme;
+
+    return ValueListenableBuilder<DateTime?>(
+      valueListenable: dateNotifier,
+      builder: (context, date, _) {
+        return Material(
+          color: AppColors.background,
+          borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+          child: InkWell(
+            onTap: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: date ?? DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+              );
+              if (picked != null) {
+                dateNotifier.value = picked;
+              }
+            },
+            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.md + 2,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.border),
+                borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              ),
+              child: Text(
+                date != null
+                    ? '${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}/${date.year}'
+                    : 'Select date',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: date != null ? AppColors.body : AppColors.disabled,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -321,7 +388,7 @@ class _ModalActions extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                   child: Center(
                     child: Text(
-                      'Save Property',
+                      'Save Asset',
                       style: textTheme.bodyLarge?.copyWith(
                         color: AppColors.surface,
                         fontWeight: FontWeight.w700,

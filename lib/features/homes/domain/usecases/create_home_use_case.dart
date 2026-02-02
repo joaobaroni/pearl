@@ -4,10 +4,10 @@ import 'package:pearl/core/errors/failures.dart';
 import 'package:pearl/features/homes/domain/usecases/params/save_home_params.dart';
 import 'package:pearl/features/homes/domain/repositories/home_repository.dart';
 
-class CreateHome {
+class CreateHomeUseCase {
   final HomeRepository _repository;
-  CreateHome(this._repository);
+  CreateHomeUseCase(this._repository);
 
-  Future<Either<Failure, void>> call(SaveHomeParams params) =>
+  Future<Either<Failure, String>> call(SaveHomeParams params) =>
       _repository.create(params);
 }

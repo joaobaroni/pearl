@@ -2,59 +2,74 @@ import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 
 import 'package:pearl/core/errors/failures.dart';
+import 'package:pearl/features/homes/data/dtos/asset_hive_dto.dart';
 import 'package:pearl/features/homes/data/dtos/home_hive_dto.dart';
 import 'package:pearl/features/homes/data/mappers/address_mapper.dart';
+import 'package:pearl/features/homes/data/mappers/asset_mapper.dart';
 import 'package:pearl/features/homes/data/mappers/home_mapper.dart';
-import 'package:pearl/features/homes/domain/models/home.dart';
+import 'package:pearl/features/homes/domain/models/asset_model.dart';
+import 'package:pearl/features/homes/domain/models/home_model.dart';
 import 'package:pearl/features/homes/domain/usecases/params/save_home_params.dart';
 import 'package:pearl/features/homes/domain/repositories/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
-  final Box<HomeHiveDto> _box;
-  HomeRepositoryImpl(this._box);
+  final Box<HomeHiveDto> _homeBox;
+  final Box<AssetHiveDto> _assetBox;
 
-  List<HomeHiveDto> _getAllDtos() => _box.values.toList();
+  HomeRepositoryImpl(this._homeBox, this._assetBox);
 
-  HomeHiveDto? _getDtoById(String id) => _box.get(id);
+  List<HomeHiveDto> _getAllDtos() => _homeBox.values.toList();
 
-  Future<void> _upsert(HomeHiveDto dto) => _box.put(dto.id, dto);
+  HomeHiveDto? _getDtoById(String id) => _homeBox.get(id);
 
-  Future<void> _remove(String id) => _box.delete(id);
+  Future<void> _upsert(HomeHiveDto dto) => _homeBox.put(dto.id, dto);
+
+  Future<void> _remove(String id) => _homeBox.delete(id);
+
+  List<AssetModel> _getAssetsForHome(String homeId) => _assetBox.values
+      .where((dto) => dto.homeId == homeId)
+      .map((dto) => dto.toDomain())
+      .toList();
 
   @override
-  Either<Failure, List<Home>> getAll() {
+  Either<Failure, List<HomeModel>> getAll() {
     try {
-      return Right(_getAllDtos().map((dto) => dto.toDomain()).toList());
+      return Right(
+        _getAllDtos()
+            .map((dto) => dto.toDomain(assets: _getAssetsForHome(dto.id)))
+            .toList(),
+      );
     } catch (e) {
       return Left(StorageFailure('Failed to load homes: $e'));
     }
   }
 
   @override
-  Either<Failure, Home> getById(String id) {
+  Either<Failure, HomeModel> getById(String id) {
     try {
       final dto = _getDtoById(id);
       if (dto == null) {
         return Left(NotFoundFailure('Home not found: $id'));
       }
-      return Right(dto.toDomain());
+      final assets = _getAssetsForHome(id);
+      return Right(dto.toDomain(assets: assets));
     } catch (e) {
       return Left(StorageFailure('Failed to load home: $e'));
     }
   }
 
   @override
-  Future<Either<Failure, void>> create(SaveHomeParams params) async {
+  Future<Either<Failure, String>> create(SaveHomeParams params) async {
     try {
+      final id = DateTime.now().millisecondsSinceEpoch.toString();
       final dto = HomeHiveDto(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        id: id,
         name: params.name,
         address: params.address.toHiveDto(),
-        assets: const [],
         createdAt: DateTime.now(),
       );
       await _upsert(dto);
-      return const Right(null);
+      return Right(id);
     } catch (e) {
       return Left(StorageFailure('Failed to create home: $e'));
     }
@@ -71,7 +86,6 @@ class HomeRepositoryImpl implements HomeRepository {
         id: existing.id,
         name: params.name,
         address: params.address.toHiveDto(),
-        assets: existing.assets,
         createdAt: existing.createdAt,
       );
       await _upsert(dto);

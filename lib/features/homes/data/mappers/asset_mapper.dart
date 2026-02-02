@@ -1,9 +1,9 @@
 import 'package:pearl/features/homes/data/dtos/asset_hive_dto.dart';
-import 'package:pearl/features/homes/domain/models/asset.dart';
+import 'package:pearl/features/homes/domain/models/asset_model.dart';
 import 'package:pearl/features/homes/domain/models/asset_category.dart';
 
 extension AssetHiveDtoMapper on AssetHiveDto {
-  Asset toDomain() => Asset(
+  AssetModel toDomain() => AssetModel(
         id: id,
         name: name,
         category: AssetCategory.values[categoryIndex],
@@ -15,8 +15,8 @@ extension AssetHiveDtoMapper on AssetHiveDto {
       );
 }
 
-extension AssetToHiveDto on Asset {
-  AssetHiveDto toHiveDto() => AssetHiveDto(
+extension AssetToHiveDto on AssetModel {
+  AssetHiveDto toHiveDto({required String homeId}) => AssetHiveDto(
         id: id,
         name: name,
         categoryIndex: category.index,
@@ -25,5 +25,6 @@ extension AssetToHiveDto on Asset {
         installDate: installDate,
         warrantyDate: warrantyDate,
         notes: notes,
+        homeId: homeId,
       );
 }

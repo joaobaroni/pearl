@@ -20,7 +20,6 @@ class HomeHiveDtoAdapter extends TypeAdapter<HomeHiveDto> {
       id: fields[0] as String,
       name: fields[1] as String,
       address: fields[2] as AddressHiveDto,
-      assets: (fields[3] as List).cast<AssetHiveDto>(),
       createdAt: fields[4] as DateTime,
     );
   }
@@ -28,15 +27,13 @@ class HomeHiveDtoAdapter extends TypeAdapter<HomeHiveDto> {
   @override
   void write(BinaryWriter writer, HomeHiveDto obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
       ..write(obj.address)
-      ..writeByte(3)
-      ..write(obj.assets)
       ..writeByte(4)
       ..write(obj.createdAt);
   }
