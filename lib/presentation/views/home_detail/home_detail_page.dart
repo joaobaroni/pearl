@@ -25,7 +25,7 @@ class HomeDetailPage extends StatefulWidget {
 class _HomeDetailPageState extends State<HomeDetailPage>
     with ViewMixin<HomeDetailPage, HomeDetailController> {
   @override
-  HomeDetailController createController() =>
+  HomeDetailController resolveController() =>
       injector.get<HomeDetailController>(param1: widget.homeId);
 
   @override

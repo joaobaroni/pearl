@@ -41,16 +41,14 @@ class AssetFormController extends Controller {
   });
 
   @override
-  void onInit() {}
-
-  @override
-  void onDispose() {
+  void dispose() {
     nameController.dispose();
     manufacturerController.dispose();
     modelController.dispose();
     selectedCategory.dispose();
     installDate.dispose();
     warrantyDate.dispose();
+    super.dispose();
   }
 
   Future<void> save(BuildContext context) async {

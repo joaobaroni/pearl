@@ -33,6 +33,7 @@ class HomeDetailController extends Controller with SubjectDispatcher {
   @override
   void onInit() {
     loadHome();
+    super.onInit();
   }
 
   void loadHome() {

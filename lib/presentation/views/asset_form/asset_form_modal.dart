@@ -36,7 +36,7 @@ class AssetFormModal extends StatefulWidget {
 class _AssetFormModalState extends State<AssetFormModal>
     with ViewMixin<AssetFormModal, AssetFormController> {
   @override
-  AssetFormController createController() => injector.get<AssetFormController>(
+  AssetFormController resolveController() => injector.get<AssetFormController>(
     param1: widget.homeId,
     param2: widget.asset,
   );

@@ -35,9 +35,6 @@ class HomeFormController extends Controller {
   HomeFormController(this._createHome, this._updateHome, {this.home});
 
   @override
-  void onInit() {}
-
-  @override
   void dispose() {
     nameController.dispose();
     streetController.dispose();

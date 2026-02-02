@@ -31,13 +31,8 @@ class HomesListController extends Controller with SubjectListener {
 
   @override
   void onInit() {
-    initSubjectListeners();
+    super.onInit();
     loadHomes();
-  }
-
-  @override
-  void onDispose() {
-    disposeSubjectListeners();
   }
 
   void loadHomes() {
