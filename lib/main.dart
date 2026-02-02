@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/di/service_locator.dart';
 import 'core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'features/homes/data/dtos/address_hive_dto.dart';
+import 'features/homes/data/dtos/asset_hive_dto.dart';
+import 'features/homes/data/dtos/home_hive_dto.dart';
 
 void main() async {
+  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
+  Hive.registerAdapter(HomeHiveDtoAdapter());
+  Hive.registerAdapter(AddressHiveDtoAdapter());
+  Hive.registerAdapter(AssetHiveDtoAdapter());
+
   await setupServiceLocator();
   runApp(const PearlApp());
 }
