@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
+import 'package:pearl/core/controllers/subject_notifier.dart';
 import 'package:pearl/features/homes/data/dtos/asset_hive_dto.dart';
 import 'package:pearl/features/homes/data/dtos/home_hive_dto.dart';
 import 'package:pearl/features/homes/data/repositories/asset_repository_impl.dart';
@@ -53,12 +54,16 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(() => UpdateAssetUseCase(getIt<AssetRepository>()));
   getIt.registerLazySingleton(() => DeleteAssetUseCase(getIt<AssetRepository>()));
 
+  // Subject Notifier
+  getIt.registerLazySingleton<SubjectNotifier>(() => SubjectNotifier());
+
   // Controllers
   getIt.registerFactory(
     () => HomesListController(
       getIt<GetHomesUseCase>(),
       getIt<DeleteHomeUseCase>(),
       getIt<GetHomeByIdUseCase>(),
+      getIt<SubjectNotifier>(),
     ),
   );
   getIt.registerFactoryParam<HomeFormController, HomeModel?, void>(
@@ -72,6 +77,7 @@ Future<void> setupServiceLocator() async {
     (homeId, _) => HomeDetailController(
       getIt<GetHomeByIdUseCase>(),
       getIt<DeleteAssetUseCase>(),
+      getIt<SubjectNotifier>(),
       homeId,
     ),
   );
