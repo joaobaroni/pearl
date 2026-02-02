@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../core/controllers/pearl_controller.dart';
-import '../../../core/di/service_locator.dart';
+import '../../../core/controllers/controller.dart';
+import '../../../core/di/service_locator.dart' show injector;
 import '../../../core/responsive/responsive.dart';
 import '../../widgets/pearl_app_bar.dart';
 import '../../../core/theme/app_colors.dart';
@@ -23,10 +23,10 @@ class HomeDetailPage extends StatefulWidget {
 }
 
 class _HomeDetailPageState extends State<HomeDetailPage>
-    with PearlControllerMixin<HomeDetailPage, HomeDetailController> {
+    with ViewMixin<HomeDetailPage, HomeDetailController> {
   @override
   HomeDetailController createController() =>
-      getIt<HomeDetailController>(param1: widget.homeId);
+      injector.get<HomeDetailController>(param1: widget.homeId);
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_shadows.dart';
 import '../../core/theme/app_spacing.dart';
-import '../../core/widgets/dashed_border.dart';
+import 'dashed_border.dart';
 
 class EmptyHomesView extends StatelessWidget {
   final VoidCallback? onAddHome;
@@ -49,9 +49,7 @@ class EmptyHomesView extends StatelessWidget {
             const SizedBox(height: AppSpacing.lg),
             Text(
               'Welcome to Home Asset Manager',
-              style: textTheme.titleMedium?.copyWith(
-                color: AppColors.heading,
-              ),
+              style: textTheme.titleMedium?.copyWith(color: AppColors.heading),
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(

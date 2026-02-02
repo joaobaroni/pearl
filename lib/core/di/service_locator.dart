@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
 import 'package:pearl/core/controllers/subject_notifier.dart';
@@ -23,74 +22,87 @@ import 'package:pearl/presentation/views/home_detail/home_detail_controller.dart
 import 'package:pearl/presentation/views/home_form/home_form_controller.dart';
 import 'package:pearl/presentation/views/homes_list/homes_list_controller.dart';
 
-final getIt = GetIt.instance;
+import 'dependency_injector.dart';
+import 'package:pearl/infra/di/get_it_dependency_injector.dart';
+
+final DependencyInjector injector = GetItDependencyInjector();
 
 Future<void> setupServiceLocator() async {
   final homeBox = await Hive.openBox<HomeHiveDto>('homes');
   final assetBox = await Hive.openBox<AssetHiveDto>('assets');
-  getIt.registerSingleton<Box<HomeHiveDto>>(homeBox);
-  getIt.registerSingleton<Box<AssetHiveDto>>(assetBox);
+
+  injector.registerSingleton<Box<HomeHiveDto>>(homeBox);
+  injector.registerSingleton<Box<AssetHiveDto>>(assetBox);
 
   // Repositories
-  getIt.registerLazySingleton<HomeRepository>(
+  injector.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(
-      getIt<Box<HomeHiveDto>>(),
-      getIt<Box<AssetHiveDto>>(),
+      injector.get<Box<HomeHiveDto>>(),
+      injector.get<Box<AssetHiveDto>>(),
     ),
   );
-  getIt.registerLazySingleton<AssetRepository>(
-    () => AssetRepositoryImpl(getIt<Box<AssetHiveDto>>()),
+  injector.registerLazySingleton<AssetRepository>(
+    () => AssetRepositoryImpl(injector.get<Box<AssetHiveDto>>()),
   );
 
   // Home usecases
-  getIt.registerLazySingleton(() => GetHomesUseCase(getIt<HomeRepository>()));
-  getIt.registerLazySingleton(
-    () => GetHomeByIdUseCase(getIt<HomeRepository>()),
+  injector.registerLazySingleton(
+    () => GetHomesUseCase(injector.get<HomeRepository>()),
   );
-  getIt.registerLazySingleton(() => CreateHomeUseCase(getIt<HomeRepository>()));
-  getIt.registerLazySingleton(() => UpdateHomeUseCase(getIt<HomeRepository>()));
-  getIt.registerLazySingleton(() => DeleteHomeUseCase(getIt<HomeRepository>()));
+  injector.registerLazySingleton(
+    () => GetHomeByIdUseCase(injector.get<HomeRepository>()),
+  );
+  injector.registerLazySingleton(
+    () => CreateHomeUseCase(injector.get<HomeRepository>()),
+  );
+  injector.registerLazySingleton(
+    () => UpdateHomeUseCase(injector.get<HomeRepository>()),
+  );
+  injector.registerLazySingleton(
+    () => DeleteHomeUseCase(injector.get<HomeRepository>()),
+  );
 
   // Asset usecases
-  getIt.registerLazySingleton(() => AddAssetUseCase(getIt<AssetRepository>()));
-  getIt.registerLazySingleton(
-    () => UpdateAssetUseCase(getIt<AssetRepository>()),
+  injector.registerLazySingleton(
+    () => AddAssetUseCase(injector.get<AssetRepository>()),
   );
-  getIt.registerLazySingleton(
-    () => DeleteAssetUseCase(getIt<AssetRepository>()),
+  injector.registerLazySingleton(
+    () => UpdateAssetUseCase(injector.get<AssetRepository>()),
+  );
+  injector.registerLazySingleton(
+    () => DeleteAssetUseCase(injector.get<AssetRepository>()),
   );
 
   // Subject Notifier
-  getIt.registerLazySingleton<SubjectNotifier>(() => SubjectNotifier());
+  injector.registerLazySingleton<SubjectNotifier>(() => SubjectNotifier());
 
   // Controllers
-  getIt.registerFactory(
+  injector.registerFactory(
     () => HomesListController(
-      getIt<GetHomesUseCase>(),
-      getIt<DeleteHomeUseCase>(),
-      getIt<GetHomeByIdUseCase>(),
-      getIt<SubjectNotifier>(),
+      injector.get<GetHomesUseCase>(),
+      injector.get<DeleteHomeUseCase>(),
+      injector.get<SubjectNotifier>(),
     ),
   );
-  getIt.registerFactoryParam<HomeFormController, HomeModel?, void>(
+  injector.registerFactoryParam<HomeFormController, HomeModel?, void>(
     (home, _) => HomeFormController(
-      getIt<CreateHomeUseCase>(),
-      getIt<UpdateHomeUseCase>(),
+      injector.get<CreateHomeUseCase>(),
+      injector.get<UpdateHomeUseCase>(),
       home: home,
     ),
   );
-  getIt.registerFactoryParam<HomeDetailController, String, void>(
+  injector.registerFactoryParam<HomeDetailController, String, void>(
     (homeId, _) => HomeDetailController(
-      getIt<GetHomeByIdUseCase>(),
-      getIt<DeleteAssetUseCase>(),
-      getIt<SubjectNotifier>(),
+      injector.get<GetHomeByIdUseCase>(),
+      injector.get<DeleteAssetUseCase>(),
+      injector.get<SubjectNotifier>(),
       homeId,
     ),
   );
-  getIt.registerFactoryParam<AssetFormController, String, AssetModel?>(
+  injector.registerFactoryParam<AssetFormController, String, AssetModel?>(
     (homeId, asset) => AssetFormController(
-      getIt<AddAssetUseCase>(),
-      getIt<UpdateAssetUseCase>(),
+      injector.get<AddAssetUseCase>(),
+      injector.get<UpdateAssetUseCase>(),
       homeId,
       asset: asset,
     ),

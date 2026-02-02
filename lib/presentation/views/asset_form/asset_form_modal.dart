@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../core/controllers/pearl_controller.dart';
-import '../../../core/di/service_locator.dart';
+import '../../../core/controllers/controller.dart';
+import '../../../core/di/service_locator.dart' show injector;
 import '../../widgets/pearl_modal.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_shadows.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/pearl_text_field.dart';
+import '../../widgets/pearl_text_field.dart';
 import '../../../domain/models/asset_model.dart';
 import '../../../domain/models/asset_category.dart';
 import 'asset_form_controller.dart';
@@ -34,10 +34,12 @@ class AssetFormModal extends StatefulWidget {
 }
 
 class _AssetFormModalState extends State<AssetFormModal>
-    with PearlControllerMixin<AssetFormModal, AssetFormController> {
+    with ViewMixin<AssetFormModal, AssetFormController> {
   @override
-  AssetFormController createController() =>
-      getIt<AssetFormController>(param1: widget.homeId, param2: widget.asset);
+  AssetFormController createController() => injector.get<AssetFormController>(
+    param1: widget.homeId,
+    param2: widget.asset,
+  );
 
   @override
   Widget build(BuildContext context) {

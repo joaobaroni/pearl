@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pearl/core/controllers/pearl_controller.dart';
+import 'package:pearl/core/controllers/controller.dart';
 
 import '../../../domain/models/asset_model.dart';
 import '../../../domain/models/asset_category.dart';
@@ -7,7 +7,7 @@ import '../../../domain/usecases/add_asset_use_case.dart';
 import '../../../domain/usecases/params/save_asset_params.dart';
 import '../../../domain/usecases/update_asset_use_case.dart';
 
-class AssetFormController extends PearlController {
+class AssetFormController extends Controller {
   final AddAssetUseCase _addAsset;
   final UpdateAssetUseCase _updateAsset;
   final String homeId;

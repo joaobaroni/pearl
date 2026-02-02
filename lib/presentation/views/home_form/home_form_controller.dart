@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pearl/core/controllers/pearl_controller.dart';
+import 'package:pearl/core/controllers/controller.dart';
 
 import '../../../domain/models/address_model.dart';
 import '../../../domain/models/home_model.dart';
@@ -8,7 +8,7 @@ import '../../../domain/usecases/create_home_use_case.dart';
 import '../../../domain/usecases/params/save_home_params.dart';
 import '../../../domain/usecases/update_home_use_case.dart';
 
-class HomeFormController extends PearlController {
+class HomeFormController extends Controller {
   final CreateHomeUseCase _createHome;
   final UpdateHomeUseCase _updateHome;
   final HomeModel? home;
@@ -38,12 +38,13 @@ class HomeFormController extends PearlController {
   void onInit() {}
 
   @override
-  void onDispose() {
+  void dispose() {
     nameController.dispose();
     streetController.dispose();
     cityController.dispose();
     zipController.dispose();
     selectedState.dispose();
+    super.dispose();
   }
 
   Future<void> save(BuildContext context) async {

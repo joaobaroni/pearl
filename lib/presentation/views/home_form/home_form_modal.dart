@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../core/controllers/pearl_controller.dart';
-import '../../../core/di/service_locator.dart';
+import '../../../core/controllers/controller.dart';
+import '../../../core/di/service_locator.dart' show injector;
 import '../../widgets/pearl_modal.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_shadows.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/pearl_text_field.dart';
+import '../../widgets/pearl_text_field.dart';
 import '../../../domain/models/home_model.dart';
 import '../../../domain/models/us_state.dart';
 import 'home_form_controller.dart';
@@ -29,10 +29,10 @@ class HomeFormModal extends StatefulWidget {
 }
 
 class _HomeFormModalState extends State<HomeFormModal>
-    with PearlControllerMixin<HomeFormModal, HomeFormController> {
+    with ViewMixin<HomeFormModal, HomeFormController> {
   @override
-  HomeFormController createController() =>
-      getIt<HomeFormController>(param1: widget.home);
+  HomeFormController resolveController() =>
+      injector.get<HomeFormController>(param1: widget.home);
 
   @override
   Widget build(BuildContext context) {

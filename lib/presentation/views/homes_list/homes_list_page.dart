@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/controllers/pearl_controller.dart';
+import '../../../core/controllers/controller.dart';
 import '../../../core/responsive/responsive.dart';
 import '../../widgets/pearl_app_bar.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -17,7 +17,7 @@ class HomesListPage extends StatefulWidget {
 }
 
 class _HomesListPageState extends State<HomesListPage>
-    with PearlControllerMixin<HomesListPage, HomesListController> {
+    with ViewMixin<HomesListPage, HomesListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

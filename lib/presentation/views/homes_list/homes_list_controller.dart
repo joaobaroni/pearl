@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pearl/core/controllers/pearl_controller.dart';
+import 'package:pearl/core/controllers/controller.dart';
 import 'package:pearl/core/extensions/list_extensions.dart';
 import 'package:pearl/core/controllers/subject_notifier.dart';
 import 'package:pearl/core/errors/failures.dart';
 import 'package:pearl/core/routing/route_names.dart';
 import 'package:pearl/domain/models/home_model.dart';
 import 'package:pearl/domain/usecases/delete_home_use_case.dart';
-import 'package:pearl/domain/usecases/get_home_by_id_use_case.dart';
 import 'package:pearl/domain/usecases/get_homes_use_case.dart';
 import 'package:pearl/presentation/views/home_form/home_form_modal.dart';
 
-class HomesListController extends PearlController with SubjectListener {
+class HomesListController extends Controller with SubjectListener {
   final GetHomesUseCase _getHomes;
   final DeleteHomeUseCase _deleteHome;
-  final GetHomeByIdUseCase _getHomeById;
 
   @override
   final SubjectNotifier subjectNotifier;
@@ -23,12 +21,7 @@ class HomesListController extends PearlController with SubjectListener {
   Failure? error;
   bool isLoading = false;
 
-  HomesListController(
-    this._getHomes,
-    this._deleteHome,
-    this._getHomeById,
-    this.subjectNotifier,
-  );
+  HomesListController(this._getHomes, this._deleteHome, this.subjectNotifier);
 
   @override
   List<Subject> get subjects => [Subject.home];

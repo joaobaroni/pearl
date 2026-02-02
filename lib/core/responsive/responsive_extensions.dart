@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'breakpoints.dart';
 
+/// Convenience getters and helpers on [BuildContext] for querying screen
+/// dimensions and selecting values based on the current [Breakpoint].
 extension ResponsiveContext on BuildContext {
   double get screenWidth => MediaQuery.sizeOf(this).width;
   double get screenHeight => MediaQuery.sizeOf(this).height;

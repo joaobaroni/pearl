@@ -1,3 +1,4 @@
+/// Screen-width breakpoints used to drive responsive layout decisions.
 enum Breakpoint {
   mobile(0),
   desktop(600);

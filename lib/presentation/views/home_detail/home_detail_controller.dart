@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pearl/core/controllers/pearl_controller.dart';
+import 'package:pearl/core/controllers/controller.dart';
 import 'package:pearl/core/controllers/subject_notifier.dart';
 import 'package:pearl/core/errors/failures.dart';
 import 'package:pearl/core/extensions/list_extensions.dart';
@@ -10,7 +10,7 @@ import 'package:pearl/domain/usecases/get_home_by_id_use_case.dart';
 import 'package:pearl/presentation/views/asset_form/asset_form_modal.dart';
 import 'package:pearl/presentation/views/home_form/home_form_modal.dart';
 
-class HomeDetailController extends PearlController with SubjectDispatcher {
+class HomeDetailController extends Controller with SubjectDispatcher {
   final GetHomeByIdUseCase _getHomeById;
   final DeleteAssetUseCase _deleteAsset;
 
