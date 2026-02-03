@@ -69,9 +69,8 @@ The asset template catalog includes a fuzzy matching utility for searching. Inst
 
 ### Data Layer — Repository and Datasource Considerations
 
-The current implementation injects Hive boxes directly into the repository classes. This works well for the current scope where persistence is purely local.
-
-In a production scenario, I would not inject the Hive box directly into the repository. Instead, I would introduce a **datasource abstraction** with two implementations — `LocalDataSource` (backed by Hive) and `RemoteDataSource` (backed by an API client). The repository would then coordinate between them, handling cache strategies, offline fallback, and synchronization. The current approach was a conscious simplification given that the app only requires local storage.
+The repository currently accesses Hive directly because the requirement is strictly local persistence, so reducing layers was a deliberate choice to keep the codebase simple.
+In a production scenario with a backend, I would introduce a datasource layer (Local/Hive and Remote/API). The repository would then coordinate between these sources, applying caching strategies, offline fallback, and synchronization logic.
 
 ---
 
