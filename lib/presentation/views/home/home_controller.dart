@@ -50,13 +50,14 @@ class HomeController extends Controller with SubjectListener {
       context.goNamed(RouteNames.homeDetail, pathParameters: {'id': id});
 
   Future<void> openHomeForm(BuildContext context, {HomeModel? home}) async {
+    final isCreating = home == null;
     final result = await HomeFormModal.show(context, home: home);
     if (result == null) return;
 
     homes.upsert(result, existing: home, test: (h) => h.id == home?.id);
     notifyListeners();
 
-    if (!context.mounted) return;
+    if (!isCreating || !context.mounted) return;
     context.goNamed(RouteNames.homeDetail, pathParameters: {'id': result.id});
   }
 
