@@ -2,6 +2,8 @@
 
 A home asset management application built with Flutter. Pearl helps users track and manage appliances, systems, and fixtures across their homes — organizing assets by category with details like manufacturer, warranty dates, and notes.
 
+**Live demo:** https://pearl-wheat.vercel.app/
+
 ## Table of Contents
 
 - [Setup and Running](#setup-and-running)
