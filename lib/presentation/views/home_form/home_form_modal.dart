@@ -164,8 +164,7 @@ class _ModalForm extends StatelessWidget {
                               const SizedBox(height: AppSpacing.xs),
                               ValueListenableBuilder<UsState>(
                                 valueListenable: controller.selectedState,
-                                builder: (context, state, _) =>
-                                    _StateDropdown(
+                                builder: (context, state, _) => _StateDropdown(
                                   value: state,
                                   onChanged: (v) =>
                                       controller.selectedState.value = v,
@@ -355,7 +354,7 @@ class _ModalActions extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                   child: Center(
                     child: Text(
-                      'Save Property',
+                      'Save Home',
                       style: textTheme.bodyLarge?.copyWith(
                         color: AppColors.surface,
                         fontWeight: FontWeight.w700,
