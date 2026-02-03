@@ -15,17 +15,17 @@ import 'home_detail_controller.dart';
 import '../../widgets/add_placeholder_card.dart';
 import '../../widgets/asset_card.dart';
 
-class HomeDetailPage extends StatefulWidget {
-  const HomeDetailPage({super.key, required this.homeId});
+class HomeDetailView extends StatefulWidget {
+  const HomeDetailView({super.key, required this.homeId});
 
   final String homeId;
 
   @override
-  State<HomeDetailPage> createState() => _HomeDetailPageState();
+  State<HomeDetailView> createState() => _HomeDetailViewState();
 }
 
-class _HomeDetailPageState extends State<HomeDetailPage>
-    with ViewMixin<HomeDetailPage, HomeDetailController> {
+class _HomeDetailViewState extends State<HomeDetailView>
+    with ViewMixin<HomeDetailView, HomeDetailController> {
   @override
   HomeDetailController resolveController() =>
       injector.get<HomeDetailController>(param1: widget.homeId);

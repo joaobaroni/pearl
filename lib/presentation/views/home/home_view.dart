@@ -5,22 +5,22 @@ import '../../../core/responsive/responsive.dart';
 import '../../widgets/pearl_app_bar.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../domain/models/home_model.dart';
-import 'homes_list_controller.dart';
+import 'home_controller.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../widgets/add_placeholder_card.dart';
 import '../../widgets/empty_homes_view.dart';
 import '../../widgets/home_card.dart';
 
-class HomesListPage extends StatefulWidget {
-  const HomesListPage({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<HomesListPage> createState() => _HomesListPageState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomesListPageState extends State<HomesListPage>
-    with ViewMixin<HomesListPage, HomesListController> {
+class _HomeViewState extends State<HomeView>
+    with ViewMixin<HomeView, HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

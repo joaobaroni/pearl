@@ -23,7 +23,7 @@ import 'package:pearl/domain/usecases/update_home_use_case.dart';
 import 'package:pearl/presentation/views/asset_form/asset_form_controller.dart';
 import 'package:pearl/presentation/views/home_detail/home_detail_controller.dart';
 import 'package:pearl/presentation/views/home_form/home_form_controller.dart';
-import 'package:pearl/presentation/views/homes_list/homes_list_controller.dart';
+import 'package:pearl/presentation/views/home/home_controller.dart';
 
 import 'dependency_injector.dart';
 import 'package:pearl/infra/di/get_it_dependency_injector.dart';
@@ -89,7 +89,7 @@ Future<void> setupServiceLocator() async {
 
   // Controllers
   injector.registerFactory(
-    () => HomesListController(
+    () => HomeController(
       injector.get<GetHomesUseCase>(),
       injector.get<DeleteHomeUseCase>(),
       injector.get<SubjectNotifier>(),

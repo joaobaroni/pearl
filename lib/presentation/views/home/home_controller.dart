@@ -10,7 +10,7 @@ import 'package:pearl/domain/usecases/delete_home_use_case.dart';
 import 'package:pearl/domain/usecases/get_homes_use_case.dart';
 import 'package:pearl/presentation/views/home_form/home_form_modal.dart';
 
-class HomesListController extends Controller with SubjectListener {
+class HomeController extends Controller with SubjectListener {
   final GetHomesUseCase _getHomes;
   final DeleteHomeUseCase _deleteHome;
 
@@ -21,7 +21,7 @@ class HomesListController extends Controller with SubjectListener {
   Failure? error;
   bool isLoading = false;
 
-  HomesListController(this._getHomes, this._deleteHome, this.subjectNotifier);
+  HomeController(this._getHomes, this._deleteHome, this.subjectNotifier);
 
   @override
   List<Subject> get subjects => [Subject.home];

@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 
-import '../../presentation/views/home_detail/home_detail_page.dart';
-import '../../presentation/views/homes_list/homes_list_page.dart';
+import '../../presentation/views/home_detail/home_detail_view.dart';
+import '../../presentation/views/home/home_view.dart';
 import 'route_names.dart';
 
 final appRouter = GoRouter(
@@ -12,7 +12,7 @@ final appRouter = GoRouter(
       name: RouteNames.homes,
       pageBuilder: (context, state) => NoTransitionPage<void>(
         key: state.pageKey,
-        child: const HomesListPage(),
+        child: const HomeView(),
       ),
       routes: [
         GoRoute(
@@ -22,7 +22,7 @@ final appRouter = GoRouter(
             final id = state.pathParameters['id']!;
             return NoTransitionPage<void>(
               key: state.pageKey,
-              child: HomeDetailPage(homeId: id),
+              child: HomeDetailView(homeId: id),
             );
           },
         ),
