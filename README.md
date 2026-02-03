@@ -4,6 +4,12 @@ A home asset management application built with Flutter. Pearl helps users track 
 
 **Live demo:** https://pearl-wheat.vercel.app/
 
+
+https://github.com/user-attachments/assets/197010f1-0b3b-44bb-bbc7-f160213b5b1f
+
+
+
+
 ## Table of Contents
 
 - [Setup and Running](#setup-and-running)
