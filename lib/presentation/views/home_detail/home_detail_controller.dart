@@ -21,7 +21,7 @@ class HomeDetailController extends Controller with SubjectDispatcher {
 
   HomeModel? home;
   Failure? error;
-  bool isLoading = false;
+  bool isLoading = true;
 
   HomeDetailController(
     this._getHomeById,
@@ -37,16 +37,14 @@ class HomeDetailController extends Controller with SubjectDispatcher {
   }
 
   void loadHome() {
-    isLoading = true;
-    error = null;
-    notifyListeners();
-
     _getHomeById(
       homeId,
     ).fold((failure) => error = failure, (result) => home = result);
 
-    isLoading = false;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      isLoading = false;
+      notifyListeners();
+    });
   }
 
   Future<void> openAssetForm(BuildContext context, {AssetModel? asset}) async {

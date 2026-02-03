@@ -7,12 +7,18 @@ class PearlTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final String? Function(String?)? validator;
+  final Widget? prefixIcon;
+  final TextInputType? keyboardType;
+  final ValueChanged<String>? onChanged;
 
   const PearlTextField({
     super.key,
     this.controller,
     this.hintText,
     this.validator,
+    this.prefixIcon,
+    this.keyboardType,
+    this.onChanged,
   });
 
   @override
@@ -20,7 +26,10 @@ class PearlTextField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       validator: validator,
+      keyboardType: keyboardType,
+      onChanged: onChanged,
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: Theme.of(
           context,
@@ -47,7 +56,9 @@ class PearlTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
           borderSide: const BorderSide(color: AppColors.destructive),
         ),
-        errorStyle: const TextStyle(fontSize: 0, height: 0),
+        errorStyle: Theme.of(
+          context,
+        ).textTheme.bodySmall?.copyWith(color: AppColors.destructive),
       ),
     );
   }

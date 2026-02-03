@@ -1,0 +1,1 @@
+enum AssetFormStep { catalog, details }

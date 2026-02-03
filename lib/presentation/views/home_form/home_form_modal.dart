@@ -7,6 +7,7 @@ import '../../widgets/pearl_modal.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_shadows.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/validators.dart';
 import '../../widgets/pearl_text_field.dart';
 import '../../../domain/models/home_model.dart';
 import '../../../domain/models/us_state.dart';
@@ -20,6 +21,7 @@ class HomeFormModal extends StatefulWidget {
   static Future<HomeModel?> show(BuildContext context, {HomeModel? home}) {
     return PearlModal.show<HomeModel>(
       context,
+      maxWidth: 550,
       child: HomeFormModal(home: home),
     );
   }
@@ -115,7 +117,7 @@ class _ModalForm extends StatelessWidget {
             PearlTextField(
               controller: controller.nameController,
               hintText: 'e.g. Downtown Loft',
-              validator: _requiredValidator,
+              validator: Validators.required,
             ),
             const SizedBox(height: AppSpacing.lg),
             _SectionHeader(text: 'PROPERTY ADDRESS'),
@@ -125,13 +127,14 @@ class _ModalForm extends StatelessWidget {
             PearlTextField(
               controller: controller.streetController,
               hintText: '123 Main St',
-              validator: _requiredValidator,
+              validator: Validators.street,
             ),
             const SizedBox(height: AppSpacing.lg),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
+                Flexible(
+                  flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -140,7 +143,7 @@ class _ModalForm extends StatelessWidget {
                       PearlTextField(
                         controller: controller.cityController,
                         hintText: 'San Francisco',
-                        validator: _requiredValidator,
+                        validator: Validators.city,
                       ),
                     ],
                   ),
@@ -165,7 +168,7 @@ class _ModalForm extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 SizedBox(
-                  width: 80,
+                  width: 110,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -174,7 +177,8 @@ class _ModalForm extends StatelessWidget {
                       PearlTextField(
                         controller: controller.zipController,
                         hintText: '94105',
-                        validator: _requiredValidator,
+                        validator: Validators.zip,
+                        keyboardType: TextInputType.number,
                       ),
                     ],
                   ),
@@ -189,9 +193,6 @@ class _ModalForm extends StatelessWidget {
     );
   }
 }
-
-String? _requiredValidator(String? value) =>
-    (value == null || value.trim().isEmpty) ? '' : null;
 
 class _FieldLabel extends StatelessWidget {
   final String text;

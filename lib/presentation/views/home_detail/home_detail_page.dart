@@ -46,27 +46,29 @@ class _HomeDetailPageState extends State<HomeDetailPage>
             onActionPressed: () => controller.openAssetForm(context),
           ),
           body: SafeArea(
-            child: Builder(
-              builder: (context) {
-                if (controller.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+            child: SelectionArea(
+              child: Builder(
+                builder: (context) {
+                  if (controller.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                final home = controller.home;
-                if (home == null) {
-                  return const Center(child: Text('Home not found'));
-                }
+                  final home = controller.home;
+                  if (home == null) {
+                    return const Center(child: Text('Home not found'));
+                  }
 
-                return _HomeDetailBody(
-                  address: home.address.formatted,
-                  assets: home.assets,
-                  onEditHome: () => controller.openEditHomeForm(context),
-                  onAddAsset: () => controller.openAssetForm(context),
-                  onEditAsset: (asset) =>
-                      controller.openAssetForm(context, asset: asset),
-                  onDeleteAsset: (asset) => controller.deleteAsset(asset.id),
-                );
-              },
+                  return _HomeDetailBody(
+                    address: home.address.formatted,
+                    assets: home.assets,
+                    onEditHome: () => controller.openEditHomeForm(context),
+                    onAddAsset: () => controller.openAssetForm(context),
+                    onEditAsset: (asset) =>
+                        controller.openAssetForm(context, asset: asset),
+                    onDeleteAsset: (asset) => controller.deleteAsset(asset.id),
+                  );
+                },
+              ),
             ),
           ),
         );

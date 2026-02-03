@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/views/home_detail/home_detail_page.dart';
@@ -11,15 +10,17 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/homes',
       name: RouteNames.homes,
-      pageBuilder: (context, state) =>
-          _AppPage(key: state.pageKey, child: const HomesListPage()),
+      pageBuilder: (context, state) => NoTransitionPage<void>(
+        key: state.pageKey,
+        child: const HomesListPage(),
+      ),
       routes: [
         GoRoute(
           path: ':id',
           name: RouteNames.homeDetail,
           pageBuilder: (context, state) {
             final id = state.pathParameters['id']!;
-            return _AppPage(
+            return NoTransitionPage<void>(
               key: state.pageKey,
               child: HomeDetailPage(homeId: id),
             );
@@ -29,8 +30,3 @@ final appRouter = GoRouter(
     ),
   ],
 );
-
-class _AppPage extends NoTransitionPage<void> {
-  _AppPage({required Widget child, super.key})
-    : super(child: SelectionArea(child: child));
-}

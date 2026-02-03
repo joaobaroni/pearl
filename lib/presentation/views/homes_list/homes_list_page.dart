@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:lucide_icons/lucide_icons.dart';
-
 import '../../../core/controllers/controller.dart';
 import '../../../core/responsive/responsive.dart';
 import '../../widgets/pearl_app_bar.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../domain/models/home_model.dart';
 import 'homes_list_controller.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../widgets/add_placeholder_card.dart';
+import '../../widgets/empty_homes_view.dart';
 import '../../widgets/home_card.dart';
 
 class HomesListPage extends StatefulWidget {
@@ -30,22 +31,57 @@ class _HomesListPageState extends State<HomesListPage>
         onActionPressed: () => controller.openHomeForm(context),
       ),
       body: SafeArea(
-        child: ListenableBuilder(
-          listenable: controller,
-          builder: (context, _) {
-            if (controller.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return _HomesGrid(
-              homes: controller.homes,
-              onOpenHome: (home) =>
-                  controller.onDetailsTap(context: context, id: home.id),
-              onEditHome: (home) =>
-                  controller.openHomeForm(context, home: home),
-              onDeleteHome: (home) => controller.deleteHome(home.id),
-              onAddHome: () => controller.openHomeForm(context),
-            );
-          },
+        child: SelectionArea(
+          child: ListenableBuilder(
+            listenable: controller,
+            builder: (context, _) {
+              if (controller.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (controller.homes.isEmpty) {
+                return _HomesEmptyState(
+                  onAddHome: () => controller.openHomeForm(context),
+                );
+              }
+              return _HomesGrid(
+                homes: controller.homes,
+                onAddHome: () => controller.openHomeForm(context),
+                onOpenHome: (home) =>
+                    controller.onDetailsTap(context: context, id: home.id),
+                onEditHome: (home) =>
+                    controller.openHomeForm(context, home: home),
+                onDeleteHome: (home) => controller.deleteHome(home.id),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HomesEmptyState extends StatelessWidget {
+  final VoidCallback onAddHome;
+
+  const _HomesEmptyState({required this.onAddHome});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.responsive<double>(
+          mobile: AppSpacing.paddingMobile,
+          desktop: AppSpacing.paddingDesktop,
+        ),
+        vertical: AppSpacing.xxl,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: AppSpacing.maxContentWidth,
+          ),
+          child: EmptyHomesView(onAddHome: onAddHome),
         ),
       ),
     );
@@ -54,17 +90,17 @@ class _HomesListPageState extends State<HomesListPage>
 
 class _HomesGrid extends StatelessWidget {
   final List<HomeModel> homes;
+  final VoidCallback onAddHome;
   final ValueChanged<HomeModel> onOpenHome;
   final ValueChanged<HomeModel> onEditHome;
   final ValueChanged<HomeModel> onDeleteHome;
-  final VoidCallback onAddHome;
 
   const _HomesGrid({
     required this.homes,
+    required this.onAddHome,
     required this.onOpenHome,
     required this.onEditHome,
     required this.onDeleteHome,
-    required this.onAddHome,
   });
 
   @override

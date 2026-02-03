@@ -4,12 +4,15 @@ import 'package:pearl/core/controllers/subject_notifier.dart';
 import 'package:pearl/data/dtos/asset_hive_dto.dart';
 import 'package:pearl/data/dtos/home_hive_dto.dart';
 import 'package:pearl/data/repositories/asset_repository_impl.dart';
+import 'package:pearl/data/repositories/asset_template_repository_impl.dart';
 import 'package:pearl/data/repositories/home_repository_impl.dart';
 import 'package:pearl/domain/models/asset_model.dart';
 import 'package:pearl/domain/models/home_model.dart';
 import 'package:pearl/domain/repositories/asset_repository.dart';
+import 'package:pearl/domain/repositories/asset_template_repository.dart';
 import 'package:pearl/domain/repositories/home_repository.dart';
 import 'package:pearl/domain/usecases/add_asset_use_case.dart';
+import 'package:pearl/domain/usecases/search_asset_templates_use_case.dart';
 import 'package:pearl/domain/usecases/delete_asset_use_case.dart';
 import 'package:pearl/domain/usecases/delete_home_use_case.dart';
 import 'package:pearl/domain/usecases/get_home_by_id_use_case.dart';
@@ -44,6 +47,9 @@ Future<void> setupServiceLocator() async {
   injector.registerLazySingleton<AssetRepository>(
     () => AssetRepositoryImpl(injector.get<Box<AssetHiveDto>>()),
   );
+  injector.registerLazySingleton<AssetTemplateRepository>(
+    () => AssetTemplateRepositoryImpl(),
+  );
 
   // Home usecases
   injector.registerLazySingleton(
@@ -71,6 +77,11 @@ Future<void> setupServiceLocator() async {
   );
   injector.registerLazySingleton(
     () => DeleteAssetUseCase(injector.get<AssetRepository>()),
+  );
+  injector.registerLazySingleton(
+    () => SearchAssetTemplatesUseCase(
+      injector.get<AssetTemplateRepository>(),
+    ),
   );
 
   // Subject Notifier
@@ -103,6 +114,7 @@ Future<void> setupServiceLocator() async {
     (homeId, asset) => AssetFormController(
       injector.get<AddAssetUseCase>(),
       injector.get<UpdateAssetUseCase>(),
+      injector.get<SearchAssetTemplatesUseCase>(),
       homeId,
       asset: asset,
     ),
