@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/responsive/responsive.dart';
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 
@@ -101,7 +102,7 @@ class _ActionButton extends StatelessWidget {
         foregroundColor: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+          borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
         ),
         splashFactory: InkRipple.splashFactory,
         overlayColor: AppColors.primarySurface,

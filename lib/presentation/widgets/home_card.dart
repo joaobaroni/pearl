@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_shadows.dart';
 import '../../core/theme/app_spacing.dart';
@@ -39,7 +40,7 @@ class _HomeCardState extends State<HomeCard> {
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: AppSpacing.borderRadiusCard,
+          borderRadius: AppBorderRadius.card,
           border: Border.all(
             color: _isHovered ? AppColors.primary : AppColors.border,
           ),
@@ -47,10 +48,10 @@ class _HomeCardState extends State<HomeCard> {
         ),
         child: Material(
           color: Colors.transparent,
-          borderRadius: AppSpacing.borderRadiusCard,
+          borderRadius: AppBorderRadius.card,
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: AppSpacing.borderRadiusCard,
+            borderRadius: AppBorderRadius.card,
             hoverColor: Colors.transparent,
             splashColor: AppColors.primarySurface,
             highlightColor: AppColors.primarySurface.withValues(alpha: 0.5),
@@ -67,7 +68,7 @@ class _HomeCardState extends State<HomeCard> {
                         decoration: BoxDecoration(
                           color: AppColors.primarySurface,
                           borderRadius: BorderRadius.circular(
-                            AppSpacing.radiusXl,
+                            AppBorderRadius.radiusXl,
                           ),
                         ),
                         child: const Icon(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import 'dashed_border.dart';
@@ -20,14 +21,14 @@ class EmptyAssetsView extends StatelessWidget {
         strokeWidth: 2,
         dashLength: 8,
         gapLength: 6,
-        borderRadius: AppSpacing.radius2xl,
+        borderRadius: AppBorderRadius.radius2xl,
       ),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 48),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppSpacing.radius2xl),
+          borderRadius: BorderRadius.circular(AppBorderRadius.radius2xl),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

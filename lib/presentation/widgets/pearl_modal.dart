@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_shadows.dart';
 import '../../core/theme/app_spacing.dart';
@@ -43,7 +44,7 @@ class PearlModal extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(AppSpacing.radius2xl),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.radius2xl),
                     boxShadow: AppShadows.md,
                   ),
                   child: child,

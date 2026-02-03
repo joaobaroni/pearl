@@ -26,7 +26,7 @@ class _HomesListPageState extends State<HomesListPage>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: PearlAppBar(
-        title: 'Meus Lares',
+        title: 'My Homes',
         actionLabel: 'Add Home',
         onActionPressed: () => controller.openHomeForm(context),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import 'dashed_border.dart';
@@ -45,7 +46,7 @@ class _AddPlaceholderCardState extends State<AddPlaceholderCard> {
               strokeWidth: 2,
               dashLength: 8,
               gapLength: 6,
-              borderRadius: AppSpacing.radius2xl,
+              borderRadius: AppBorderRadius.radius2xl,
             ),
             child: child,
           );
@@ -57,14 +58,14 @@ class _AddPlaceholderCardState extends State<AddPlaceholderCard> {
             color: _isHovered
                 ? AppColors.primarySurface.withValues(alpha: 0.3)
                 : AppColors.surface,
-            borderRadius: AppSpacing.borderRadiusCard,
+            borderRadius: AppBorderRadius.card,
           ),
           child: Material(
             color: Colors.transparent,
-            borderRadius: AppSpacing.borderRadiusCard,
+            borderRadius: AppBorderRadius.card,
             child: InkWell(
               onTap: widget.onTap,
-              borderRadius: AppSpacing.borderRadiusCard,
+              borderRadius: AppBorderRadius.card,
               hoverColor: Colors.transparent,
               splashColor: AppColors.primarySurface,
               highlightColor: AppColors.primarySurface.withValues(alpha: 0.5),

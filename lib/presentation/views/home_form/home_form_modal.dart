@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../core/controllers/controller.dart';
 import '../../../core/di/service_locator.dart' show injector;
 import '../../widgets/pearl_modal.dart';
+import '../../../core/theme/app_border_radius.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_shadows.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -246,7 +247,7 @@ class _StateDropdown extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+        borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
         border: Border.all(color: AppColors.border),
       ),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
@@ -288,10 +289,10 @@ class _ModalActions extends StatelessWidget {
         Expanded(
           child: Material(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
             child: InkWell(
               onTap: onCancel,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                 child: Center(
@@ -312,14 +313,14 @@ class _ModalActions extends StatelessWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               boxShadow: AppShadows.button,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
             ),
             child: Material(
               color: AppColors.primary,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
               child: InkWell(
                 onTap: onSave,
-                borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
                 splashColor: AppColors.primaryHover,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),

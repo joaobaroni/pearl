@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'app_border_radius.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
 
@@ -35,7 +36,7 @@ abstract final class AppTheme {
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: AppSpacing.borderRadiusCard,
+          borderRadius: AppBorderRadius.card,
           side: const BorderSide(color: AppColors.border),
         ),
         margin: EdgeInsets.zero,
@@ -46,7 +47,7 @@ abstract final class AppTheme {
           foregroundColor: AppColors.surface,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: AppSpacing.borderRadiusInput,
+            borderRadius: AppBorderRadius.input,
           ),
           textStyle: textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.w600,
@@ -62,7 +63,7 @@ abstract final class AppTheme {
           foregroundColor: AppColors.body,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: AppSpacing.borderRadiusInput,
+            borderRadius: AppBorderRadius.input,
           ),
           side: const BorderSide(color: AppColors.border),
           padding: const EdgeInsets.symmetric(
@@ -79,15 +80,15 @@ abstract final class AppTheme {
           vertical: AppSpacing.md,
         ),
         border: OutlineInputBorder(
-          borderRadius: AppSpacing.borderRadiusInput,
+          borderRadius: AppBorderRadius.input,
           borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: AppSpacing.borderRadiusInput,
+          borderRadius: AppBorderRadius.input,
           borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: AppSpacing.borderRadiusInput,
+          borderRadius: AppBorderRadius.input,
           borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         hintStyle: textTheme.bodyLarge?.copyWith(color: AppColors.muted),
@@ -100,7 +101,7 @@ abstract final class AppTheme {
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: AppSpacing.borderRadiusModal,
+          borderRadius: AppBorderRadius.modal,
         ),
       ),
     );

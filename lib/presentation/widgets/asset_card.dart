@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_shadows.dart';
 import '../../core/theme/app_spacing.dart';
@@ -42,7 +43,7 @@ class _AssetCardState extends State<AssetCard> {
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: AppSpacing.borderRadiusCard,
+          borderRadius: AppBorderRadius.card,
           border: Border.all(
             color: _isHovered ? AppColors.primary : AppColors.border,
           ),
@@ -59,7 +60,7 @@ class _AssetCardState extends State<AssetCard> {
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: AppColors.background,
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
                   ),
                   child: Icon(
                     widget.asset.category.icon,

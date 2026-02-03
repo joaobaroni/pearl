@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../widgets/shimmer_box.dart';
+import '../../../../core/theme/app_border_radius.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../widgets/shimmer_box.dart';
 
 class CatalogCardShimmer extends StatelessWidget {
   const CatalogCardShimmer({super.key});
@@ -14,7 +15,7 @@ class CatalogCardShimmer extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         border: Border.all(color: AppColors.border),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+        borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
       ),
       child: Row(
         children: [

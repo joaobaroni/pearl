@@ -5,6 +5,7 @@ import '../../../core/controllers/controller.dart';
 import '../../../core/di/service_locator.dart' show injector;
 import '../../../core/responsive/responsive_extensions.dart';
 import '../../widgets/pearl_modal.dart';
+import '../../../core/theme/app_border_radius.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_shadows.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -12,8 +13,8 @@ import '../../widgets/pearl_text_field.dart';
 import '../../../domain/models/asset_model.dart';
 import '../../../domain/models/asset_template.dart';
 import 'asset_form_controller.dart';
-import 'asset_form_step.dart';
-import 'catalog_card_shimmer.dart';
+import 'enums/asset_form_step.dart';
+import 'widgets/catalog_card_shimmer.dart';
 
 class AssetFormModal extends StatefulWidget {
   final String homeId;
@@ -212,8 +213,7 @@ class _CatalogContent extends StatelessWidget {
                       childAspectRatio: 2.4,
                     ),
                     itemCount: 6,
-                    itemBuilder: (context, index) =>
-                        const CatalogCardShimmer(),
+                    itemBuilder: (context, index) => const CatalogCardShimmer(),
                   );
                 }
                 return ValueListenableBuilder<List<AssetTemplate>>(
@@ -226,9 +226,7 @@ class _CatalogContent extends StatelessWidget {
                         ),
                         child: Text(
                           'No items found',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
+                          style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: AppColors.muted),
                         ),
                       );
@@ -291,14 +289,14 @@ class _CatalogCardState extends State<_CatalogCard> {
           border: Border.all(
             color: _isHovered ? AppColors.primary : AppColors.border,
           ),
-          borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+          borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
         ),
         child: Material(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+          borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
             hoverColor: Colors.transparent,
             splashColor: AppColors.primarySurface,
             highlightColor: AppColors.primarySurface.withValues(alpha: 0.5),
@@ -368,7 +366,7 @@ class _SelectedTypeCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: AppColors.primarySurface,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+        borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
         border: Border.all(color: AppColors.accentShadow),
       ),
       child: Row(
@@ -550,7 +548,7 @@ class _DateField extends StatelessWidget {
       builder: (context, date, _) {
         return Material(
           color: AppColors.background,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+          borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
           child: InkWell(
             onTap: () async {
               final picked = await showDatePicker(
@@ -563,7 +561,7 @@ class _DateField extends StatelessWidget {
                 dateNotifier.value = picked;
               }
             },
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(
@@ -572,7 +570,7 @@ class _DateField extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.border),
-                borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
               ),
               child: Text(
                 date != null
@@ -605,10 +603,10 @@ class _ModalActions extends StatelessWidget {
         Expanded(
           child: Material(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
             child: InkWell(
               onTap: onCancel,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                 child: Center(
@@ -629,14 +627,14 @@ class _ModalActions extends StatelessWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               boxShadow: AppShadows.button,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
             ),
             child: Material(
               color: AppColors.primary,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+              borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
               child: InkWell(
                 onTap: onSave,
-                borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
                 splashColor: AppColors.primaryHover,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../core/theme/app_border_radius.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_shadows.dart';
 import '../../core/theme/app_spacing.dart';
@@ -21,14 +22,14 @@ class EmptyHomesView extends StatelessWidget {
         strokeWidth: 2,
         dashLength: 8,
         gapLength: 6,
-        borderRadius: AppSpacing.radius3xl,
+        borderRadius: AppBorderRadius.radius3xl,
       ),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 80),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppSpacing.radius3xl),
+          borderRadius: BorderRadius.circular(AppBorderRadius.radius3xl),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -61,14 +62,14 @@ class EmptyHomesView extends StatelessWidget {
               DecoratedBox(
                 decoration: BoxDecoration(
                   boxShadow: AppShadows.button,
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                  borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
                 ),
                 child: Material(
                   color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                  borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
                   child: InkWell(
                     onTap: onAddHome,
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.radiusXl),
                     splashColor: AppColors.primaryHover,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

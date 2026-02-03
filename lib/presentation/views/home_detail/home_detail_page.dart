@@ -7,6 +7,7 @@ import '../../../core/controllers/controller.dart';
 import '../../../core/di/service_locator.dart' show injector;
 import '../../../core/responsive/responsive.dart';
 import '../../widgets/pearl_app_bar.dart';
+import '../../../core/theme/app_border_radius.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../domain/models/asset_model.dart';
@@ -146,7 +147,7 @@ class _AddressCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: AppSpacing.borderRadiusCard,
+        borderRadius: AppBorderRadius.card,
         border: Border.all(color: AppColors.border),
       ),
       child: Row(

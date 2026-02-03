@@ -10,7 +10,7 @@ import '../../../domain/usecases/add_asset_use_case.dart';
 import '../../../domain/usecases/params/save_asset_params.dart';
 import '../../../domain/usecases/search_asset_templates_use_case.dart';
 import '../../../domain/usecases/update_asset_use_case.dart';
-import 'asset_form_step.dart';
+import 'enums/asset_form_step.dart';
 
 class AssetFormController extends Controller {
   final AddAssetUseCase _addAsset;
