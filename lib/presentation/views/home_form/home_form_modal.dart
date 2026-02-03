@@ -131,60 +131,89 @@ class _ModalForm extends StatelessWidget {
               validator: Validators.street,
             ),
             const SizedBox(height: AppSpacing.lg),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _FieldLabel(text: 'City'),
-                      const SizedBox(height: AppSpacing.xs),
-                      PearlTextField(
-                        controller: controller.cityController,
-                        hintText: 'San Francisco',
-                        validator: Validators.city,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.lg),
-                SizedBox(
-                  width: 80,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _FieldLabel(text: 'State'),
-                      const SizedBox(height: AppSpacing.xs),
-                      ValueListenableBuilder<UsState>(
-                        valueListenable: controller.selectedState,
-                        builder: (context, state, _) => _StateDropdown(
-                          value: state,
-                          onChanged: (v) => controller.selectedState.value = v,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final narrow = constraints.maxWidth < 400;
+                return Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _FieldLabel(text: 'City'),
+                              const SizedBox(height: AppSpacing.xs),
+                              PearlTextField(
+                                controller: controller.cityController,
+                                hintText: 'San Francisco',
+                                validator: Validators.city,
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(width: AppSpacing.lg),
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _FieldLabel(text: 'State'),
+                              const SizedBox(height: AppSpacing.xs),
+                              ValueListenableBuilder<UsState>(
+                                valueListenable: controller.selectedState,
+                                builder: (context, state, _) =>
+                                    _StateDropdown(
+                                  value: state,
+                                  onChanged: (v) =>
+                                      controller.selectedState.value = v,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (!narrow) ...[
+                          const SizedBox(width: AppSpacing.sm),
+                          SizedBox(
+                            width: 110,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _FieldLabel(text: 'Zip'),
+                                const SizedBox(height: AppSpacing.xs),
+                                PearlTextField(
+                                  controller: controller.zipController,
+                                  hintText: '94105',
+                                  validator: Validators.zip,
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    if (narrow) ...[
+                      const SizedBox(height: AppSpacing.lg),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _FieldLabel(text: 'Zip'),
+                          const SizedBox(height: AppSpacing.xs),
+                          PearlTextField(
+                            controller: controller.zipController,
+                            hintText: '94105',
+                            validator: Validators.zip,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                SizedBox(
-                  width: 110,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _FieldLabel(text: 'Zip'),
-                      const SizedBox(height: AppSpacing.xs),
-                      PearlTextField(
-                        controller: controller.zipController,
-                        hintText: '94105',
-                        validator: Validators.zip,
-                        keyboardType: TextInputType.number,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
             const SizedBox(height: AppSpacing.xxl),
             _ModalActions(onCancel: onCancel, onSave: onSave),
