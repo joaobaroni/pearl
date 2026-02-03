@@ -27,32 +27,41 @@ class PearlModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-        child: Container(
-          color: const Color(0x660F172A),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: GestureDetector(
-            onTap: () {},
-            child: Material(
-              color: Colors.transparent,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: maxWidth),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(AppBorderRadius.radius2xl),
-                    boxShadow: AppShadows.md,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                child: const ColoredBox(color: Color(0x660F172A)),
+              ),
+            ),
+          ),
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Material(
+                color: Colors.transparent,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: maxWidth),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(
+                        AppBorderRadius.radius2xl,
+                      ),
+                      boxShadow: AppShadows.md,
+                    ),
+                    child: child,
                   ),
-                  child: child,
                 ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
